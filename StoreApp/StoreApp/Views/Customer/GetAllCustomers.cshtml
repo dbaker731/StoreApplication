@@ -1,0 +1,30 @@
+﻿@model ModelLayer.ViewModels.CustomerListViewModel
+
+@{
+    ViewData["Title"] = "GetAllCustomers";
+}
+
+<h1>All Customers</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var customer in Model.Customers) {
+        <tr>
+            <td>
+                @customer.CustomerFName @customer.CustomerLName
+                <a asp-controller="Customer" asp-action="Details" asp-route-id="@customer.CustomerID" method="get">Details</a> |
+                <a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.CustomerID" method="get">Edit Profile</a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-controller="Customer" asp-action="Index">Back To Dashboard</a>

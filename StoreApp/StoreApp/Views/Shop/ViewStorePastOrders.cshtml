@@ -1,0 +1,61 @@
+﻿@model ModelLayer.ViewModels.CartListViewModel
+
+@{
+    ViewData["Title"] = "ViewStorePastOrders";
+}
+
+<h1>View Store Past Orders</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cart Id
+            </th>
+            <th>
+                Ordered By
+            </th>
+            <th>
+                No. Items
+            </th>
+            <th>
+                Total Price
+            </th>
+            <th>
+                Order Time
+            </th>
+            <th>
+                Actions
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cart in Model.CurrentCarts)
+        {
+        <tr>
+            <td>
+                @cart.OrderId
+            </td>
+            <td>
+                @cart.Customer.CustomerUserName 
+            </td>
+            <td>
+                @cart.ProductsInOrder.Count()
+            </td>
+            <td>
+                @cart.TotalPrice
+            </td>
+            <td>
+                @cart.OrderTime
+            </td>
+            <td>
+                <a asp-controller="Shop" asp-action="ViewPastOrder" asp-route-orderId="@cart.OrderId">View Order</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Shop" asp-action="Index">Back to Shopping!</a>

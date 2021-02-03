@@ -1,0 +1,41 @@
+﻿@model ModelLayer.ViewModels.StoreInfoViewModel
+
+@{
+    ViewData["Title"] = "CreateStore";
+}
+
+<div style="color:red;">@Html.ValidationSummary()</div>
+<div class="row">
+    <!--Show details are saved successfully message-->
+    <div class="col-lg-12">@ViewBag.Message</div>
+</div>
+
+<h1>CreateStore</h1>
+
+<h4>StoreInfoViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateNewStore">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StoreLocationName" class="control-label"></label>
+                <input asp-for="StoreLocationName" class="form-control" />
+                <span asp-validation-for="StoreLocationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoreLocationAddress" class="control-label"></label>
+                <input asp-for="StoreLocationAddress" class="form-control" />
+                <span asp-validation-for="StoreLocationAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create Store" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

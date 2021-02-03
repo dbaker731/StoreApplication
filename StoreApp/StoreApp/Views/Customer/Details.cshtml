@@ -1,0 +1,88 @@
+﻿@model ModelLayer.ViewModels.CustomerInfoViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@{
+    @using Microsoft.AspNetCore.Http;
+    @inject IHttpContextAccessor HttpContextAccessor
+    var isAdmin = @HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
+}
+
+<h1>Details</h1>
+
+<div style="color:red;">@Html.ValidationSummary()</div>
+<div class="row">
+    <!--Show details are saved successfully message-->
+    <div class="col-lg-12">@ViewBag.Message</div>
+</div>
+
+<div>
+    <h4>CustomerInfoViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerUserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerUserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerFName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerFName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerLName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerLName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerAge)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerAge)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerBirthday)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerBirthday)
+        </dd>
+        @if (isAdmin.ToLower() == "true")
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.isAdmin)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.isAdmin)
+            </dd>
+        }
+
+    </dl>
+</div>
+
+
+<div>
+    @if (Model != null)
+    {
+        <a asp-controller="Customer" asp-action="Edit" asp-route-id="@Model.CustomerID" method="get">Edit Profile</a>
+    }
+    @if (isAdmin.ToLower() == "true")
+    {
+        <span> | </span>
+        <a asp-controller="Customer" asp-action="GetAllCustomers" method="get">Back to List</a>
+    }
+
+</div>
+
+

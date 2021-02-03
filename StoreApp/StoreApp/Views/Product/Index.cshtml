@@ -1,0 +1,36 @@
+﻿@model ModelLayer.ViewModels.ProductListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="CreateProduct">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var product in Model.Products) {
+        <tr>
+            <td>
+                @product.ProductName |
+                @product.ProductDesc |
+                @product.ProductPrice |
+                @product.IsAgeRestricted |
+                @product.ProductID
+
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.ProductID">Product details</a> |
+                <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.ProductID">Edit Product</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-controller="Customer" asp-action="Index">Back to dashboard</a>

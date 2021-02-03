@@ -1,0 +1,104 @@
+﻿@model ModelLayer.ViewModels.ShoppingListViewModel
+
+@{
+    ViewData["Title"] = Model.StoreLocation.StoreLocationName;
+}
+
+@{
+    @using Microsoft.AspNetCore.Http;
+    @inject IHttpContextAccessor HttpContextAccessor
+    var isAdmin = @HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
+}
+
+
+<div style="color:red;">@Html.ValidationSummary()</div>
+<div class="row">
+    <!--Show details are saved successfully message-->
+    <div class="col-lg-12">@ViewBag.Message</div>
+</div>
+
+<h1>@Model.StoreLocation.StoreLocationName</h1>
+
+@if (isAdmin.ToLower() == "true")
+{
+    <p>
+        <a asp-controller="Shop" asp-action="AddInventory" asp-route-id="@Model.StoreLocation.StoreLocationId">Add Inventory</a>
+    </p>
+}
+
+    <p>
+        <a asp-controller="Shop" asp-action="ViewCart" asp-route-StoreId="@Model.StoreLocation.StoreLocationId">View Cart</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Product Name
+                </th>
+                <th>
+                    Product Description
+                </th>
+                <th>
+                    Product Price
+                </th>
+                <th>
+                    Product Quantity
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var inventory in Model.Inventories)
+            {
+                <tr>
+                    <td>
+                        @inventory.Product.ProductName
+                    </td>
+                    <td>
+                        @inventory.Product.ProductDesc
+                    </td>
+                    <td>
+                        @inventory.Product.ProductPrice
+                    </td>
+                    <td>
+                        @inventory.ProductQuantity
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AddToCart">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ProductName" class="control-label"></label>
+                    <select asp-for="ProductName" asp-items="@ViewBag.Inventory"></select>
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="QuantityAdded" class="control-label"></label>
+                    <input asp-for="QuantityAdded" class="form-control" />
+                    <span asp-validation-for="QuantityAdded" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="StoreId" value="@Model.StoreLocation.StoreLocationId" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add to Cart" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <p>
+        <a asp-controller="Shop" asp-action="Index">Back To List</a>
+    </p>
+    <a asp-controller="Customer" asp-action="Index">Back to dashboard</a>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

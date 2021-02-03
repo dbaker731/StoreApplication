@@ -1,0 +1,29 @@
+﻿@model ModelLayer.ViewModels.CustomerInfoViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@{
+    @using Microsoft.AspNetCore.Http;
+    @inject IHttpContextAccessor HttpContextAccessor
+    var isAdmin = @HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
+}
+
+    <h1>Welcome @Model.CustomerFName!</h1>
+
+<a asp-controller="Shop" asp-action="Store" asp-route-id=" @Model.PerferedStore.StoreLocationId">Quick Shop!</a>
+<br />
+<a asp-controller="Shop" asp-action="Index">Shop!</a>
+<br />
+<a asp-controller="Customer" asp-action="Details" asp-route-id="@Model.CustomerID" method="get">Details</a>
+<br />
+<a asp-controller="Login" asp-action="Logout">Log Out</a>
+@if (isAdmin.ToLower() == "true")
+{
+    <br />
+    <a asp-controller="Shop" asp-action="CreateStore">Create Store Location</a>
+    <br />
+    <a asp-controller="Product" asp-action="Index" method="get">Manage Products</a>
+    <br />
+    <a asp-controller="Customer" asp-action="GetAllCustomers" method="get">Manage Customers</a>
+}

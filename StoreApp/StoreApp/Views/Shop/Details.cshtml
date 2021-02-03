@@ -1,0 +1,45 @@
+﻿@model ModelLayer.ViewModels.StoreInfoViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div style="color:red;">@Html.ValidationSummary()</div>
+<div class="row">
+    <!--Show details are saved successfully message-->
+    <div class="col-lg-12">@ViewBag.Message</div>
+</div>
+
+<h1>Details</h1>
+
+<div>
+    <h4>StoreInfoViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StoreLocationId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StoreLocationId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StoreLocationName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StoreLocationName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StoreLocationAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StoreLocationAddress)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Model != null)
+    {
+    <a asp-controller="Shop" asp-action="Edit" asp-route-id="@Model.StoreLocationId">Edit</a>
+    }
+    | <a asp-action="Index">Back to List</a>
+</div>
